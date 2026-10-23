@@ -1,0 +1,16 @@
+AROMAS ART — TIENDA CORREGIDA
+
+Contenido:
+- index.html: tienda actualizada, selector manual corregido e imágenes en las tarjetas.
+- bottles/: fotografías locales de perfumes.
+- og.jpg: imagen de respaldo para perfumes sin foto individual.
+- favicon.svg y archivos de publicación de GitHub Pages.
+
+PARA PUBLICAR EN GITHUB PAGES:
+1. Descomprime este ZIP.
+2. Abre la carpeta aromasart-tienda (tu repositorio) en GitHub.
+3. Sube/reemplaza index.html y la carpeta bottles, además de og.jpg.
+4. Conserva el resto de archivos del repositorio si ya existen.
+5. Espera a que GitHub Pages publique y abre la página con recarga completa.
+
+El sitio usa imágenes locales para evitar depender de enlaces externos para las fotografías. Algunos perfumes usan una imagen de respaldo si no tienen una foto individual asociada.

@@ -1,0 +1,9 @@
+# Aromas Art — GitHub Pages
+
+1. Descomprime este ZIP.
+2. En tu repositorio GitHub `aromasart-tienda`, sube el contenido de la carpeta `aromasart-github-pages` a la raíz del repositorio (no la carpeta contenedora).
+3. Acepta reemplazar `index.html` y sube también la carpeta `bottles` completa.
+4. En Settings → Pages, deja `main` y `/(root)`.
+5. Espera a que termine el despliegue y recarga la página.
+
+Precios: 15 ml RD$350, 30 ml RD$800, 50 ml RD$1,200, 100 ml RD$1,700.
