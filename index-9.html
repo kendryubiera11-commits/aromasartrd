@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>Aromas Art — Catálogo de Perfumes</title>
+<style>
+:root{--bg:#080808;--card:#141414;--red:#e11d2e;--text:#fff;--muted:#b8b8b8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:radial-gradient(ellipse at top,#25080b 0,#090909 42%,#050505 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1150px;margin:auto;padding:0 18px}
+header{position:sticky;top:0;z-index:5;background:#080808ed;backdrop-filter:blur(14px);border-bottom:1px solid #3a161a}
+.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:21px;font-weight:800}.brand span,.hero h1 span{color:var(--red)}
+.nav a{color:#eee;text-decoration:none;font-size:14px}
+.hero{text-align:center;padding:60px 0 35px}
+.badge{display:inline-block;border:1px solid #7d1b25;color:#ff6873;background:#1b080a;padding:7px 13px;border-radius:999px;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.hero h1{font-size:clamp(38px,9vw,68px);line-height:1;margin:20px 0 14px;letter-spacing:-2px}
+.hero p,.intro{max-width:650px;margin:auto;color:var(--muted);line-height:1.65}
+.btn,button{cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;margin-top:20px;padding:13px 18px;border-radius:12px;background:linear-gradient(135deg,#f22b3d,#b90e1d);color:#fff;text-decoration:none;font-weight:800;border:1px solid #f34b59}
+section{padding:28px 0 55px}
+.heading{text-align:center;margin-bottom:22px}.heading h2{margin:0 0 8px;font-size:29px}.heading p{margin:0;color:var(--muted)}
+.controls{display:grid;grid-template-columns:1fr;gap:10px;margin:20px 0}
+input,select,.filter{width:100%;padding:13px;border-radius:11px;background:#111;color:#fff;border:1px solid #3a3a3a;font:inherit}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{width:auto;padding:10px 14px;font-weight:700}.filter.active{background:var(--red);border-color:var(--red)}
+.counter{color:#ff737d;font-weight:700;margin:12px 0}
+.catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.perfume-card{overflow:hidden;background:linear-gradient(155deg,#181818,#0d0d0d);border:1px solid #343434;border-radius:18px;padding:14px;transition:transform .2s,border-color .2s}
+.perfume-card:hover{transform:translateY(-3px);border-color:#8e202b}
+.image-wrap{height:220px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.perfume-img{width:100%;height:100%;object-fit:contain;display:block}
+.image-fallback{display:none;color:#222;text-align:center;padding:18px;font-weight:800}
+.perfume-card h3{font-size:16px;line-height:1.3;margin:13px 0 5px}
+.category-label{color:#ff737d;font-size:11px;text-transform:uppercase;letter-spacing:.7px}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0}
+.price-row select{padding:9px;min-width:0}
+.add{width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#f22b3d,#b90e1d);color:white;border:1px solid #f34b59;font-weight:800}
+.empty{text-align:center;color:#aaa;padding:35px}
+.cart-panel{margin:30px 0;padding:18px;background:#111;border:1px solid #333;border-radius:16px}
+.account-panel{margin:30px 0;padding:18px;background:#111;border:1px solid #333;border-radius:16px}.account-form{display:grid;grid-template-columns:1fr;gap:10px}.account-actions{display:flex;gap:10px;flex-wrap:wrap}.secondary{padding:11px 14px;border-radius:10px;background:#222;color:#fff;border:1px solid #444;font-weight:700}.account-note{color:#aaa;font-size:12px;line-height:1.5}.checkout{margin-top:14px}
+@media(min-width:700px){.account-form{grid-template-columns:1fr 1fr}.account-form .wide{grid-column:1/-1}}
+.cart-panel h2{margin-top:0}.cart-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #292929}.cart-item button{background:none;color:#ff737d;border:0}
+footer{border-top:1px solid #282828;padding:25px 0 35px;text-align:center;color:#999;font-size:13px}
+@media(min-width:700px){.controls{grid-template-columns:1fr 220px auto}.hero{padding-top:85px}}
+@media(max-width:480px){.nav{align-items:flex-start;padding-top:12px;padding-bottom:12px;flex-direction:column}.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.image-wrap{height:160px}.perfume-card{padding:10px}.perfume-card h3{font-size:14px}.price-row{align-items:stretch;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">Aromas <span>Art</span></div>
+    <nav><a href="#catalogo">Catálogo</a>　<a href="#cuenta">Mi cuenta</a>　<a href="#carrito">Carrito (<span id="cartCount">0</span>)</a></nav>
+  </div>
+</header>
+<main>
+  <div class="wrap hero">
+    <div class="badge">Perfumería · Catálogos</div>
+    <h1>Encuentra tu<br><span>próximo aroma.</span></h1>
+    <p>Busca por nombre y explora fragancias femeninas y masculinas. Selecciona el tamaño y agrega tus favoritos al carrito.</p>
+    <a class="btn" href="#catalogo">Ver perfumes ↓</a>
+  </div>
+  <section id="catalogo" class="wrap">
+    <div class="heading"><h2>Descubre tu fragancia</h2><p>Busca por nombre o filtra por categoría.</p></div>
+    <div class="controls">
+      <input id="search" type="search" placeholder="🔎 Buscar perfume por nombre..." autocomplete="off">
+      <select id="sort"><option value="featured">Descubrir fragancias</option><option value="az">Nombre: A–Z</option><option value="za">Nombre: Z–A</option></select>
+      <button class="filter" id="shuffle">↻ Mezclar</button>
+    </div>
+    <div class="filters">
+      <button class="filter active" data-category="todos">Todos</button>
+      <button class="filter" data-category="masculino">Masculinos</button>
+      <button class="filter" data-category="femenino">Femeninos</button>
+    </div>
+    <div class="counter" id="counter" aria-live="polite"></div>
+    <div class="catalog-grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>No encontramos ese perfume. Prueba otro nombre.</div>
+  </section>
+  <section class="wrap" id="carrito">
+    <div class="cart-panel"><h2>🛒 Tu carrito</h2><div id="cartItems">Todavía no has agregado perfumes.</div><p><strong>Total: <span id="total">RD$0</span></strong></p><div class="account-actions"><button class="secondary" id="clearCart" type="button">Vaciar carrito</button><button class="add checkout" id="checkout" type="button">Pedir por WhatsApp</button></div><p class="account-note">Al pulsar “Pedir por WhatsApp” se abrirá WhatsApp con el detalle de tu pedido para que lo envíes.</p></div>
+  </section>
+  <section class="wrap" id="cuenta"><div class="account-panel"><h2>👤 Mi cuenta</h2><p id="accountStatus">Crea tu perfil con tus datos básicos para agilizar tus pedidos.</p><form id="accountForm" class="account-form"><input id="customerName" name="name" placeholder="Nombre completo" autocomplete="name" required><input id="customerPhone" name="phone" placeholder="Teléfono / WhatsApp" type="tel" autocomplete="tel" required><input class="wide" id="customerEmail" name="email" placeholder="Correo electrónico (opcional)" type="email" autocomplete="email"><div class="account-actions wide"><button class="add" type="submit">Guardar mis datos</button><button class="secondary" id="editAccount" type="button">Editar datos</button><button class="secondary" id="deleteAccount" type="button">Borrar perfil</button></div></form><p class="account-note">Este perfil se guarda solo en este navegador y dispositivo; no es una cuenta con contraseña ni se sincroniza entre dispositivos. No introduzcas datos sensibles.</p></div></section>
+</main>
+<footer><div class="wrap">Aromas Art · Catálogo de perfumes</div></footer>
+<script>
+(function(){
+  // Para que una foto aparezca, su archivo debe estar en /bottles/ y su nombre
+  // debe coincidir con el nombre configurado abajo. Las rutas distinguen mayúsculas.
+  const datos={"male":["POLO BLUE","POLO RED","360 RED","INVICTUS","PHANTOM","1 MILION","1 MILLION ELIXIR","1 MILLION PRIVÉ","1 MILLION LUCKY","BLACK XS","BLACK XS L´EXCÉS","INVICTSUS VICTORY","INVICTUS AQUA","INVICTUS INTENSE","INVICTUS ONIX","NAUTICA VOYAGE","TOY BOY","EXPLORER","LEGEND","LEGEND NIGHT","SWISS ARMY","EROS","EROS FLAME","DYLAN BLUE","POUR HOMME","STARWALKER","LACOSTE BLANC","LACOSTE ESSENTIAL","LACOSTE MAGNETIC","SCANDAL","ULTRA MALE","LE BEAU LP","LE MALE ELIXIR","L´EAU D´ISSEY","L´EAU D´ISSEY SPORT","BOTTLED","BOTTLED NIGHT","DARK BLUE","ACQUA DI GIO","BOTTLED INLIMITED","ACQUA DI GIO PROFUMO","LIGHT BLUE","STRONGER WITH YOU","SWY LEATHER","BAD","FUEL FOR LIFE","BLEU DE CHANEL","PLUS PLUS","EAU DE CARTIER","DELCRATION","212 HEROES","212 SEXY MEN","212 MEN","212 VIP MEN","212 VIP BLACK","BB DAZZLING GARDEN","ONE SHOCK FOR HIM","BAD BOY","VELVET GOLD","MAN IN BLACK","MAN WOOD ESSENCE","AZZARO POUR HOMME","MAN EXTREME","BLUE SEDUCTION","GOLD EDITION","OUD SAFRON","ROYAL AMBER","AMBER ROUGE","OUD FOR GLORY","OUD SUBLIME","HONOR & GLORY","QAAE´D","OUD AMETHYST","LAIL MALEKI","CLUB DE NUIT INTENSE","ASAD","KHAMRAH","BHARARA KING","BLECKER STREET","SIGNATURE","MILLÉSIMÉ IMPERIAL","SILVER MOUNTAIN WATER","SCENT OF PEACE","AVENTUS","BACCARAT ROUGE 540","SANTAL 33","L´IMMENSITÉ","IL KAKUNO","OMBRE NOMADE","IMAGINATION","RED TOBACCO","ARABIANS MONTALE","CEDRAT BOISE","ARABIANS TONKA","HEROD","Y","GREEN IRISH TWEED","VALENTINO UOMO","HALLOWEN MAN","THE SCENT","GREENWICH VILLAGE","SAUVAGE ELIXIR","EMBLEM","LAFFAYETTE","NAXOS","ORIGINAL SANTAL","SAUVAGE","NEW YORK NIGHTS","LEGEND RED","ACQUA DI GIO PROFONDO","HIMALAYA","OMBRE LEATHER","TRIBECA","ALLURE HOMME SPORT","PEGASUS","INVICTUS VIC ELIXIR","MANDARIN SKY","ETERNITY FOR MEN","ASAD ZANZIBAR","FARENHEIT","GUILTY POUR HOMME","9 PM","ROLLING IN LOVE","CACTUS GARDEN","MEGAMAN","SMOKING HOT","YSL POUR HOMME","ANGEL","BLUE LABEL","NICHE","LAYTON","VIKING","NO LIMITS","EROS ENERGY","AJWAD","PACIFIC CHILL","KHAMRAH QAHWA","IMPACT","POUR HOMME INTENSO","ATTIMO POUR HOMME","LACOSTE RED","9 PM REBEL","LIONHEART","CK IN2U","CODE","ASAD BOURBON","BORN IN ROMA UOMO","VANILLA OUD","CH MEN","ALTHAIR","TOBACCO VANILLE","LOST CHERRY","ERBA PURA","BAD BOY COBALT","TONY LOMMI","OUD WOOD","COSTA AZURRA ACQUA","TORINO 21","ANOTHER 13","THE ONE FOR MEN","ELYSIUM POUR HOMME","ALEXANDRIA II","ORANGE MARMALADE","WESTSIDE","THE MOST WANTED","GAME OF SPADES ROYALE","GAME OF SPADES WILDCARD","GAME OF SPADES KING","AMBER OUD AQUA DUBAI","HAWAAS ICE FOR HIM","OPERA","ANGEL SHARE","BIANCO LATTE","HIGH FREQUENCY","MUSK THERAPY","UOMO BIR INTENSE","ODISSEY BA HA MAS","KING SOLEIL","SUMMER HAMMER","HONEY AOUD","BLUE TALISMAN","DARK VANILLA","ODISSEY ARTISTO","NEW YORK AMBER","NOMAD","POLO SPORT","ARSENAL","ASAD ALIXIR","COOL WATER","PURE XS","PINEAPPLE","CHOCOLATE GREEDY","SHAHEEN GOLD","BHARARA ONIX","LACOSTE NOIR","PARIS HILTON FOR MEN","IL ORGASME","ODISSEY GO MANGO","TERRE D´HERMÉS","TYGAR","SPACEBOMB","BIR UOMO EXTRADOCE","ART OF UNIVERSE","PI","BAL D AFRIQUE","LEGEND SPIRIT","KHAMRAH DUCKHAN","KARPOS","AHLI"],"female":["FANTASY","FANTASY IN BLOOM","BURBERRY HER","OMNIA CORAL","SECRET OBSESION","212 SEXY","212 VIP ROSÉ","212 VIP WILD PARTY","GOOD GIRL","GOOD GIRL SUPREME","CLASSIQUE","COCO MADEMOISELLE","CHANCE","GOOD GIRL BLUSH","LIGHT BLUE","GUESS GOLD","HUGO XX","SCANDAL","BOSS WOMAN","MEOW","TOUCH OF PINK","LE VIE ET BELLE","LEGEND POUR FEMME","MOSCHINO FUNNY","TOY 2 BUBLLE GUM","5TH AVENUE","LADY MILLION","LADY MILLION LUCKY","LACOSTE MAGNETIC","DAZZLE","HEIREES","360","L´EAU D´ISSEY","YARA","MOBLE BLUSH","SONG OF OUD","ITALICA","BRIGHT CRYSTAL","DELINA","CLOD","YARA CANDY","PINK PRETTY AND PURE","BOMBSHELL","COCO EAU DE PARFUM","COCONUT PASSION","VANILLA LACE","PURE SEDUCTION","DONNA BORN IN ROMA","PEARL GACEL","TOMMY GIRL","TOY 2","BONBON","2CLOD PINK","CH BEAUTIES","VERY GOOD GIRL","CHEIROSA 62","CHEIROSA 40","CHEIROSA 71","CHEIROSA 87","CHEIROSA 59","CHEIROSA 68","FAME","OMNIA CRYSTALLINE","ISLAND BLISS","ETERNITY","THE ONE","INCANTO CHARMS","YUM YUM","EUPHORIA","HALLOWEN","MAYAR","ELYSIUM POUR FEMME","SI","MISS DIOR","ANGE OU DEMOND","J´ADORE","OLYMPEA","CHANEL No 5","MY WAY","DYLAN BLUE FEMME","ACQUA DI GIOIA","YARA MOI","CANDI ROSE","L´IMPERATRICE","PRADA CANDY","TOY 2 PEARL","DIVINE","YELLOW DIAMOND","YARA TOUS","RALPH","FLOWER BY KENZO","ULTRAVIOLET","EROS POUR FEMME","SCANDALOUS","SIGNATURE FOR HER","ECLAIRE","B.I.R DONNA EXTRADOCE","GOOD GIRL LÉGERE","LA BOMBA","HAPPY","LOVE SPELL","AMARIGE","POISON","GUCCI GUILTY","BIR DONNA YELLOW","LOLIYTA","BLACK OPIUM","ANGEL","VANILLA SKIN","VANILLA SUEDE","WESTSIDE","ODISSEY MARSHMALLOW","ELCAIRE PISTACHE","NOLITA","BERRY ON TOP","COOKIE CRAVE","AMBER ROMANCE","9 PM POUR FEMME","AHLI CARVUS","VANILLA FREAK","BHARARA ROSE","AHLI VEGA","IL FEMME","DANIA","ODISSEY CANDEE","THANK U NEXT"]};
+  // Los archivos de bottles siguen el orden del catálogo: m-000... y f-209...
+  // Los nombres especiales conocidos se conservan como alias exactos.
+  const nombresArchivo={
+    "1 MILION":"1-million", "BLACK XS L´EXCÉS":"black-xs-l-exces",
+    "INVICTSUS VICTORY":"invictus-victory", "INVICTUS ONIX":"invictus-onix",
+    "BOTTLED INLIMITED":"bottled-unlimited", "DELCRATION":"declaration",
+    "OUD SAFRON":"oud-saffron", "QAAE´D":"qaaed", "LAIL MALEKI":"lail-maleki",
+    "MILLÉSIMÉ IMPERIAL":"millesime-imperial", "L´IMMENSITÉ":"l-immensite",
+    "L´EAU D´ISSEY":"leau-dissey", "L´EAU D´ISSEY SPORT":"leau-dissey-sport",
+    "1 MILLION ELIXIR":"1-million-elixir", "1 MILLION PRIVÉ":"1-million-prive",
+    "1 MILLION LUCKY":"1-million-lucky", "212 VIP ROSÉ":"212-vip-ros",
+    "J´ADORE":"j-adore", "OLYMPEA":"olymp-a", "B.I.R DONNA EXTRADOCE":"bir-donna-extradose",
+    "GOOD GIRL LÉGERE":"good-girl-legere", "TERRE D´HERMÉS":"terre-d-hermes",
+    "BIR UOMO EXTRADOCE":"bir-uomo-extradose", "BAL D AFRIQUE":"bal-d-afrique",
+    "L´IMPERATRICE":"l-imperatrice", "CHANEL No 5":"chanel-no-5",
+    "TOY 2 BUBLLE GUM":"toy-2-bubble-gum", "2CLOD PINK":"2-cold-pink",
+    "ELCAIRE PISTACHE":"eclaire-pistache", "LOLIYTA":"lolita"
+  };
+  const slug=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[´'’`]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const perfumes=[
+    ...datos.male.map((name,i)=>({name,cat:"masculino",prefix:`m-${String(i).padStart(3,"0")}`,fileSlug:nombresArchivo[name]||slug(name)})),
+    ...datos.female.map((name,i)=>({name,cat:"femenino",prefix:`f-${String(209+i).padStart(3,"0")}`,fileSlug:nombresArchivo[name]||slug(name)}))
+  ];
+  const archivosImagen = {"f-209":"f-209-fantasy.jpg","f-210":"f-210-fantasy-in-bloom.jpg","f-211":"f-211-burberry-her.jpg","f-212":"f-212-omnia-coral.jpg","f-213":"f-213-secret-obsession.jpg","f-214":"f-214-212-sexy.jpg","f-215":"f-215-212-vip-ros.jpg","f-217":"f-217-good-girl.jpg","f-218":"f-218-good-girl-supr-me.jpg","f-219":"f-219-classique.jpg","f-220":"f-220-coco-mademoiselle.jpg","f-221":"f-221-chance.jpg","f-222":"f-222-good-girl-blush.jpg","f-223":"f-223-light-blue.jpg","f-224":"f-224-guess-gold.jpg","f-225":"f-225-hugo-xx.jpg","f-226":"f-226-scandal.jpg","f-227":"f-227-boss-woman.jpg","f-228":"f-228-meow.jpg","f-229":"f-229-touch-of-pink.jpg","f-230":"f-230-la-vie-est-belle.jpg","f-231":"f-231-legend-pour-femme.jpg","f-232":"f-232-moschino-funny.jpg","f-233":"f-233-toy-2-bubble-gum.jpg","f-234":"f-234-5th-avenue.jpg","f-235":"f-235-lady-million.jpg","f-236":"f-236-lady-million-lucky.jpg","f-237":"f-237-lacoste-magnetic.jpg","f-238":"f-238-dazzle.jpg","f-239":"f-239-heiress.jpg","f-240":"f-240-360.jpg","f-241":"f-241-l-eau-d-issey.jpg","f-242":"f-242-yara.jpg","f-244":"f-244-song-of-oud.jpg","f-245":"f-245-italica.jpg","f-246":"f-246-bright-crystal.jpg","f-247":"f-247-delina.jpg","f-248":"f-248-cloud.jpg","f-251":"f-251-bombshell.jpg","f-252":"f-252-coco-eau-de-parfum.jpg","f-253":"f-253-coconut-passion.jpg","f-255":"f-255-pure-seduction.jpg","f-256":"f-256-donna-born-in-roma.jpg","f-258":"f-258-tommy-girl.jpg","f-259":"f-259-toy-2.jpg","f-260":"f-260-bonbon.jpg","f-261":"f-261-cloud-pink.jpg","f-262":"f-262-ch-beauties.jpg","f-263":"f-263-very-good-girl.jpg","f-264":"f-264-cheirosa-62.jpg","f-265":"f-265-cheirosa-40.jpg","f-268":"f-268-cheirosa-59.jpg","f-269":"f-269-cheirosa-68.jpg","f-270":"f-270-fame.jpg","f-271":"f-271-omnia-crystalline.jpg","f-273":"f-273-eternity.jpg","f-274":"f-274-the-one.jpg","f-275":"f-275-incanto-charms.jpg","f-277":"f-277-euphoria.jpg","f-278":"f-278-halloween.jpg","f-279":"f-279-mayar.jpg","f-281":"f-281-s.jpg","f-282":"f-282-miss-dior.jpg","f-283":"f-283-ange-ou-d-mon.jpg","f-284":"f-284-j-adore.jpg","f-285":"f-285-olymp-a.jpg","f-286":"f-286-chanel-n-5.jpg","f-287":"f-287-my-way.jpg","f-288":"f-288-dylan-blue-pour-femme.jpg","f-289":"f-289-acqua-di-gioia.jpg","f-290":"f-290-yara-moi.jpg","f-291":"f-291-candi-rose.jpg","f-292":"f-292-l-imp-ratrice.jpg","f-293":"f-293-prada-candy.jpg","f-294":"f-294-toy-2-pearl.jpg","f-295":"f-295-divine.jpg","f-296":"f-296-yellow-diamond.jpg","f-297":"f-297-yara-tous.jpg","f-298":"f-298-ralph.jpg","f-299":"f-299-flower-by-kenzo.jpg","f-300":"f-300-ultraviolet.jpg","f-301":"f-301-eros-pour-femme.jpg","f-302":"f-302-scandalous.jpg","f-303":"f-303-signature-for-her.jpg","f-306":"f-306-good-girl-l-g-re.jpg","f-308":"f-308-happy.jpg","f-309":"f-309-love-spell.jpg","f-310":"f-310-amarige.jpg","f-311":"f-311-poison.jpg","f-312":"f-312-gucci-guilty.jpg","f-314":"f-314-lolita.jpg","f-315":"f-315-black-opium.jpg","f-316":"f-316-angel.jpg","f-317":"f-317-vanilla-skin.jpg","f-319":"f-319-west-side.jpg","f-322":"f-322-nolita.jpg","f-325":"f-325-amber-romance.jpg","f-334":"f-334-thank-u-next.jpg","m-000":"m-000-polo-blue.jpg","m-001":"m-001-polo-red.jpg","m-002":"m-002-360-red.jpg","m-003":"m-003-invictus.jpg","m-004":"m-004-phantom.jpg","m-005":"m-005-1-million.jpg","m-006":"m-006-1-million-elixir.jpg","m-007":"m-007-1-million-priv.jpg","m-008":"m-008-1-million-lucky.jpg","m-009":"m-009-black-xs.jpg","m-011":"m-011-invictus-victory.jpg","m-012":"m-012-invictus-aqua.jpg","m-013":"m-013-invictus-intense.jpg","m-014":"m-014-invictus-onyx.jpg","m-015":"m-015-nautica-voyage.jpg","m-016":"m-016-toy-boy.jpg","m-017":"m-017-explorer.jpg","m-018":"m-018-legend.jpg","m-020":"m-020-swiss-army.jpg","m-021":"m-021-eros.jpg","m-022":"m-022-eros-flame.jpg","m-023":"m-023-dylan-blue.jpg","m-024":"m-024-versace-pour-homme.jpg","m-025":"m-025-starwalker.jpg","m-026":"m-026-lacoste-blanc.jpg","m-027":"m-027-lacoste-essential.jpg","m-028":"m-028-lacoste-magnetic.jpg","m-029":"m-029-scandal.jpg","m-030":"m-030-ultra-male.jpg","m-031":"m-031-le-beau-le-parfum.jpg","m-032":"m-032-le-male-elixir.jpg","m-033":"m-033-l-eau-d-issey.jpg","m-034":"m-034-l-eau-d-issey-sport.jpg","m-035":"m-035-bottled.jpg","m-036":"m-036-bottled-night.jpg","m-037":"m-037-dark-blue.jpg","m-038":"m-038-acqua-di-gio.jpg","m-039":"m-039-bottled-unlimited.jpg","m-040":"m-040-acqua-di-gio-profumo.jpg","m-041":"m-041-light-blue.jpg","m-042":"m-042-stronger-with-you.jpg","m-043":"m-043-stronger-with-you-leather.jpg","m-044":"m-044-bad.jpg","m-045":"m-045-fuel-for-life.jpg","m-046":"m-046-bleu-de-chanel.jpg","m-047":"m-047-plus-plus.jpg","m-048":"m-048-eau-de-cartier.jpg","m-049":"m-049-d-claration.jpg","m-050":"m-050-212-heroes.jpg","m-052":"m-052-212-men.jpg","m-053":"m-053-212-vip-men.jpg","m-054":"m-054-212-vip-black.jpg","m-055":"m-055-bad-boy-dazzling-garden.jpg","m-056":"m-056-ck-one-shock-for-him.jpg","m-057":"m-057-bad-boy.jpg","m-058":"m-058-velvet-gold.jpg","m-059":"m-059-man-in-black.jpg","m-060":"m-060-man-wood-essence.jpg","m-061":"m-061-azzaro-pour-homme.jpg","m-062":"m-062-man-extreme.jpg","m-063":"m-063-blue-seduction.jpg","m-064":"m-064-1-million-gold.jpg","m-065":"m-065-oud-saffron.jpg","m-066":"m-066-royal-amber.jpg","m-067":"m-067-amber-rouge.jpg","m-069":"m-069-oud-sublime.jpg","m-071":"m-071-qaed-al-fursan.jpg","m-072":"m-072-oud-amethyst.jpg","m-073":"m-073-lail-maleki.jpg","m-074":"m-074-club-de-nuit-intense.jpg","m-075":"m-075-asad.jpg","m-076":"m-076-khamrah.jpg","m-078":"m-078-bleecker-street.jpg","m-079":"m-079-signature.jpg","m-080":"m-080-mill-sime-imp-rial.jpg","m-081":"m-081-silver-mountain-water.jpg","m-082":"m-082-scent-of-peace.jpg","m-083":"m-083-aventus.jpg","m-084":"m-084-baccarat-rouge-540.jpg","m-085":"m-085-santal-33.jpg","m-086":"m-086-l-immensit.jpg","m-088":"m-088-ombre-nomade.jpg","m-089":"m-089-imagination.jpg","m-090":"m-090-red-tobacco.jpg","m-091":"m-091-arabians.jpg","m-092":"m-092-cedrat-boise.jpg","m-093":"m-093-arabians-tonka.jpg","m-094":"m-094-herod.jpg","m-095":"m-095-y.jpg","m-096":"m-096-green-irish-tweed.jpg","m-097":"m-097-valentino-uomo.jpg","m-098":"m-098-halloween-man.jpg","m-099":"m-099-the-scent.jpg","m-100":"m-100-greenwich-village.jpg","m-101":"m-101-sauvage-elixir.jpg","m-102":"m-102-emblem.jpg","m-103":"m-103-lafayette-street.jpg","m-104":"m-104-naxos.jpg","m-105":"m-105-original-santal.jpg","m-106":"m-106-sauvage.jpg","m-107":"m-107-new-york-nights.jpg","m-109":"m-109-acqua-di-gio-profondo.jpg","m-110":"m-110-himalaya.jpg","m-111":"m-111-ombr-leather.jpg","m-112":"m-112-tribeca.jpg","m-113":"m-113-allure-homme-sport.jpg","m-114":"m-114-pegasus.jpg","m-115":"m-115-invictus-victory-elixir.jpg","m-116":"m-116-mandarin-sky.jpg","m-117":"m-117-eternity-for-men.jpg","m-118":"m-118-asad-zanzibar.jpg","m-119":"m-119-fahrenheit.jpg","m-120":"m-120-guilty-pour-homme.jpg","m-121":"m-121-9-pm.jpg","m-122":"m-122-rolling-in-love.jpg","m-123":"m-123-cactus-garden.jpg","m-125":"m-125-smoking-hot.jpg","m-126":"m-126-ysl-pour-homme.jpg","m-127":"m-127-angel.jpg","m-128":"m-128-blue-label.jpg","m-129":"m-129-niche.jpg","m-130":"m-130-layton.jpg","m-131":"m-131-viking.jpg","m-134":"m-134-ajwad.jpg","m-135":"m-135-pacific-chill.jpg","m-136":"m-136-khamrah-qahwa.jpg","m-137":"m-137-impact.jpg","m-138":"m-138-pour-homme-intenso.jpg","m-139":"m-139-attimo-pour-homme.jpg","m-140":"m-140-lacoste-red.jpg","m-143":"m-143-ck-in2u.jpg","m-144":"m-144-armani-code.jpg","m-146":"m-146-born-in-roma-uomo.jpg","m-147":"m-147-vanilla-oud.jpg","m-148":"m-148-ch-men.jpg","m-149":"m-149-althair.jpg","m-150":"m-150-tobacco-vanille.jpg","m-151":"m-151-lost-cherry.jpg","m-152":"m-152-erba-pura.jpg","m-153":"m-153-bad-boy-cobalt.jpg","m-154":"m-154-tony-iommi.jpg","m-155":"m-155-oud-wood.jpg","m-156":"m-156-costa-azzurra-acqua.jpg","m-157":"m-157-torino21.jpg","m-158":"m-158-another-13.jpg","m-159":"m-159-the-one-for-men.jpg","m-161":"m-161-alexandria-ii.jpg","m-163":"m-163-west-side.jpg","m-164":"m-164-the-most-wanted.jpg","m-169":"m-169-hawas-ice-for-him.jpg","m-170":"m-170-opera.jpg","m-171":"m-171-angels-share.jpg","m-173":"m-173-high-frequency.jpg","m-174":"m-174-musk-therapy.jpg","m-179":"m-179-honey-aoud.jpg","m-180":"m-180-blue-talisman.jpg","m-181":"m-181-dark-vanilla.jpg","m-183":"m-183-new-york-amber.jpg","m-184":"m-184-nomad.jpg","m-185":"m-185-polo-sport.jpg","m-186":"m-186-arsenal.jpg","m-188":"m-188-cool-water.jpg","m-189":"m-189-pure-xs.jpg","m-190":"m-190-pineapple.jpg","m-191":"m-191-chocolate-greedy.jpg","m-192":"m-192-shaheen-gold.jpg","m-194":"m-194-lacoste-noir.jpg","m-195":"m-195-paris-hilton-for-men.jpg","m-198":"m-198-terre-d-herm-s.jpg","m-199":"m-199-tygar.jpg","m-200":"m-200-spicebomb.jpg","m-204":"m-204-bal-d-afrique.jpg"};
+  function imageCandidates(p){
+    // Probar las carpetas habituales y rutas absolutas de GitHub Pages.
+    // El nombre exacto del archivo se toma del ZIP, por identificador del catálogo.
+    const id=p.prefix;
+    const archivo=archivosImagen[id];
+    if(!archivo) return [];
+    const bases=["./bottles/","./blottles/","bottles/","blottles/","/aromasart/bottles/","/aromasart/blottles/"];
+    return [...new Set(bases.map(base=>base+archivo))];
+  }
+  const sizes=[{ml:15,price:350},{ml:30,price:800},{ml:50,price:1200},{ml:100,price:1700}];
+  let category="todos", cart=[];
+  const grid=document.getElementById("grid"), search=document.getElementById("search"), sort=document.getElementById("sort");
+  function render(){
+    let list=perfumes.filter(p=>(category==="todos"||p.cat===category)&&p.name.toLowerCase().includes(search.value.trim().toLowerCase()));
+    if(sort.value==="az")list.sort((a,b)=>a.name.localeCompare(b.name));
+    if(sort.value==="za")list.sort((a,b)=>b.name.localeCompare(a.name));
+    document.getElementById("counter").textContent=list.length+" perfumes";
+    document.getElementById("empty").hidden=list.length!==0;
+    grid.innerHTML=list.map(p=>{
+      const src="";
+      return `<article class="perfume-card">
+        <div class="image-wrap">
+          <img class="perfume-img" alt="${p.name}" loading="lazy" data-perfume="${p.name.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}" style="display:none">
+          <div class="image-fallback">Aromas Art<br><small>${p.name}</small><br><small>Imagen pendiente</small></div>
+        </div>
+        <div class="category-label">${p.cat==="femenino"?"Femenino":"Masculino"}</div>
+        <h3>${p.name}</h3>
+        <div class="price-row"><select aria-label="Tamaño para ${p.name}" class="size">${sizes.map(s=>`<option value="${s.ml}" data-price="${s.price}">${s.ml} ml — RD$${s.price.toLocaleString("es-DO")}</option>`).join("")}</select></div>
+        <button class="add" data-add="${p.name}">Agregar al carrito</button>
+      </article>`;
+    }).join("");
+    // Prueba nombres de archivo reales y variantes de extensión/acentos; no muestra una foto incorrecta.
+    grid.querySelectorAll(".perfume-img").forEach(img=>{
+      const perfume=perfumes.find(p=>p.name===img.dataset.perfume);
+      if(!perfume) return;
+      const candidates=imageCandidates(perfume); let i=0;
+      const tryNext=()=>{
+        if(i>=candidates.length){img.style.display="none";img.nextElementSibling.style.display="block";return;}
+        img.onerror=()=>{i++;tryNext();};
+        img.onload=()=>{img.style.display="block";img.nextElementSibling.style.display="none";};
+        img.src=candidates[i++];
+      };
+      tryNext();
+    });
+  }
+  function renderCart(){
+    document.getElementById("cartCount").textContent=cart.reduce((n,x)=>n+x.qty,0);
+    document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-item"><span>${x.name} · ${x.ml} ml × ${x.qty}<br><small>RD$${(x.price*x.qty).toLocaleString("es-DO")}</small></span><span><button data-remove="${i}">Quitar</button></span></div>`).join(""):"Todavía no has agregado perfumes.";
+    document.getElementById("total").textContent="RD$"+cart.reduce((n,x)=>n+x.price*x.qty,0).toLocaleString("es-DO");
+  }
+  grid.addEventListener("click",e=>{
+    const btn=e.target.closest("[data-add]");if(!btn)return;
+    const card=btn.closest(".perfume-card"), select=card.querySelector(".size"), opt=select.selectedOptions[0];
+    const item={name:btn.dataset.add,ml:Number(select.value),price:Number(opt.dataset.price),qty:1};
+    const found=cart.find(x=>x.name===item.name&&x.ml===item.ml);
+    if(found)found.qty++;else cart.push(item);renderCart();
+    btn.textContent="¡Agregado!";setTimeout(()=>btn.textContent="Agregar al carrito",900);
+  });
+  document.getElementById("cartItems").addEventListener("click",e=>{
+    const b=e.target.closest("[data-remove]");if(!b)return;cart.splice(Number(b.dataset.remove),1);renderCart();
+  });
+  document.getElementById("clearCart").addEventListener("click",()=>{cart=[];renderCart();});
+  document.querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>{
+    category=b.dataset.category;document.querySelectorAll("[data-category]").forEach(x=>x.classList.toggle("active",x===b));render();
+  }));
+  search.addEventListener("input",render);sort.addEventListener("change",render);
+  document.getElementById("shuffle").addEventListener("click",()=>{perfumes.sort(()=>Math.random()-.5);sort.value="featured";render();});
+  const accountKey="aromasArtCustomerProfile";
+  const waNumber="18494282672"; // WhatsApp en formato internacional, sin el +
+  const accountForm=document.getElementById("accountForm");
+  const accountStatus=document.getElementById("accountStatus");
+  function getProfile(){try{return JSON.parse(localStorage.getItem(accountKey)||"null")}catch(_){return null}}
+  function showProfile(){
+    const profile=getProfile();
+    if(profile){document.getElementById("customerName").value=profile.name||"";document.getElementById("customerPhone").value=profile.phone||"";document.getElementById("customerEmail").value=profile.email||"";accountStatus.textContent="Perfil guardado: "+profile.name+". Puedes editar tus datos cuando quieras.";}
+    else {accountStatus.textContent="Crea tu perfil con tus datos básicos para agilizar tus pedidos.";}
+  }
+  accountForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    const profile={name:document.getElementById("customerName").value.trim(),phone:document.getElementById("customerPhone").value.trim(),email:document.getElementById("customerEmail").value.trim()};
+    if(!profile.name||!profile.phone){alert("Escribe tu nombre y teléfono para guardar el perfil.");return;}
+    try{localStorage.setItem(accountKey,JSON.stringify(profile));accountStatus.textContent="¡Perfil guardado! Tus datos están listos para el próximo pedido.";alert("Tus datos se guardaron en este navegador.");}
+    catch(_){alert("No se pudieron guardar los datos. Revisa la configuración de almacenamiento del navegador.");}
+  });
+  document.getElementById("editAccount").addEventListener("click",()=>{document.getElementById("customerName").focus();});
+  document.getElementById("deleteAccount").addEventListener("click",()=>{if(confirm("¿Quieres borrar los datos de tu perfil guardados en este navegador?")){localStorage.removeItem(accountKey);accountForm.reset();showProfile();}});
+  document.getElementById("checkout").addEventListener("click",()=>{
+    if(!cart.length){alert("Tu carrito está vacío. Agrega al menos un perfume antes de hacer el pedido.");return;}
+    const profile=getProfile();
+    const name=(profile&&profile.name)||document.getElementById("customerName").value.trim();
+    const phone=(profile&&profile.phone)||document.getElementById("customerPhone").value.trim();
+    const email=(profile&&profile.email)||document.getElementById("customerEmail").value.trim();
+    const total=cart.reduce((n,x)=>n+x.price*x.qty,0);
+    const lines=cart.map(x=>`• ${x.name} — ${x.ml} ml × ${x.qty}: RD$${(x.price*x.qty).toLocaleString("es-DO")}`);
+    const message=["¡Hola Aromas Art! Quiero realizar este pedido:","",...lines,"","TOTAL: RD$"+total.toLocaleString("es-DO"),"", "Nombre: "+(name||"Pendiente"),"Teléfono: "+(phone||"Pendiente"),...(email?["Correo: "+email]:[]),"","Por favor, confirmen disponibilidad y entrega."].join("\n");
+    window.open("https://wa.me/"+waNumber+"?text="+encodeURIComponent(message),"_blank","noopener,noreferrer");
+  });
+  showProfile();render();renderCart();
+})();
+</script>
+</body>
+</html>
